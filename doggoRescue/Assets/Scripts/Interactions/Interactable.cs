@@ -10,7 +10,12 @@ public class Interactable : MonoBehaviour
         ResetHooman(hooman, 1F);
     }
 
-   protected void ResetHooman(HoomanMover hooman, float time)
+    public virtual void Interact(DoggoInteract doggo)
+    {
+        Debug.Log(doggo.gameObject.name + " has interacted with " + name, gameObject);
+    }
+
+    protected void ResetHooman(HoomanMover hooman, float time)
     {
         StartCoroutine(hooman.MoveBack(time));
     }

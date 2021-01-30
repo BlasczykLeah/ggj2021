@@ -20,7 +20,6 @@ public class ClickerHandler : MonoBehaviour
     public GameObject borkObject;
 
     [Header("Camera")]
-    public float cameraSpeed;
     public Transform cameraTransform;
     Vector3 cameraOffset;
 
