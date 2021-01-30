@@ -4,8 +4,29 @@ using UnityEngine;
 
 public class DoggoDig : Interactable
 {
+    public Animator myAnim;
+
+    public float resetTime;
+
+    bool resetting = false;
+
     public override void Interact(ClickerHandler doggo)
     {
-        Debug.Log(doggo.gameObject.name + " has interacted with " + name, gameObject);
+        if (!resetting)
+        {
+            resetting = true;
+            Debug.Log(doggo.gameObject.name + " digging", gameObject);
+            myAnim.SetTrigger("dig");
+            StartCoroutine(SnowGrow());
+        }
+    }
+
+    IEnumerator SnowGrow()
+    {
+        yield return new WaitForSeconds(resetTime);
+        myAnim.SetTrigger("reset");
+
+        yield return new WaitForSeconds(2F);
+        resetting = false;
     }
 }
