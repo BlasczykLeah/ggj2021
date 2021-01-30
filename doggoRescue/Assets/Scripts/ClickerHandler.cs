@@ -79,7 +79,7 @@ public class ClickerHandler : MonoBehaviour
         if (ableToMove && Input.GetMouseButtonDown(0))
         {
             Vector3 pos = new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z);
-            Debug.Log(pos);
+            //Debug.Log(pos);
 
             clickedObject.transform.position = pos;
             clickedObject.SetActive(true);
@@ -89,8 +89,13 @@ public class ClickerHandler : MonoBehaviour
         else if(ableToMove && Input.GetMouseButtonDown(1))
         {
             //bork
+            Debug.LogWarning("BORK");
+            Vector3 pos = new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z);
+
             borkObject.SetActive(true);
-            hoomanAgent.GetComponent<HoomanMover>().BorkCommand(new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z), borkObject);
+            borkObject.transform.position = pos;
+
+            hoomanAgent.GetComponent<HoomanMover>().BorkCommand(pos, borkObject);
         }
     }
 
@@ -100,8 +105,6 @@ public class ClickerHandler : MonoBehaviour
 
         myAgent.SetDestination(position);
         StartCoroutine(MoveCamera());
-        //StartCoroutine(MoveHooman(position));
-        hoomanAgent.GetComponent<HoomanMover>().StartMovement();
     }
 
     IEnumerator MoveCamera()
@@ -109,6 +112,7 @@ public class ClickerHandler : MonoBehaviour
         yield return new WaitForSeconds(0.2F);
 
         moveCamera = true;
+        hoomanAgent.GetComponent<HoomanMover>().StartMovement();
     }
 
     public bool isMoving()
