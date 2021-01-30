@@ -35,6 +35,8 @@ public class BulletinBoard : MonoBehaviour
     {
         missionStarted = true;
         MissionTracker.inst.currentMission = missionList[missionNumber];
+        MissionTracker.inst.currentMission.person.SetActive(true);
+        MissionTracker.inst.currentMission.physicalHints.SetActive(true);
         CloseMap();
     }
 
@@ -42,6 +44,8 @@ public class BulletinBoard : MonoBehaviour
     {
         missionNumber++;
         missionStarted = false;
+        MissionTracker.inst.currentMission.person.SetActive(false);
+        MissionTracker.inst.currentMission.physicalHints.SetActive(false);
         MissionTracker.inst.currentMission = new Mission();
     }
 
