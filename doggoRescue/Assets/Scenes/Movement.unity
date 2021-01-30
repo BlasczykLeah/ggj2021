@@ -665,6 +665,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c4430e1ae9a907449ef613eb127d368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myAnim: {fileID: 0}
   canMove: 1
   UIobject: {fileID: 1554341361}
   clickedObject: {fileID: 1560400745}

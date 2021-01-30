@@ -6,11 +6,10 @@ using UnityEngine.EventSystems;
 
 public class ClickerHandler : MonoBehaviour
 {
-    public static ClickerHandler thing;
-
+    public Animator myAnim;
     public bool canMove;
     bool ableToMove;
-    bool moveCamera;
+    bool moveCamera, cameraMoving;
 
     NavMeshAgent myAgent;
 
@@ -22,6 +21,7 @@ public class ClickerHandler : MonoBehaviour
     [Header("Camera")]
     public Transform cameraTransform;
     Vector3 cameraOffset;
+    float cameraTime;
 
     [Header("Hooman")]
     public NavMeshAgent hoomanAgent;
@@ -40,13 +40,20 @@ public class ClickerHandler : MonoBehaviour
 
         if (moveCamera)
         {
-            cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z), myAgent.speed * Time.deltaTime * 0.8F);
+            cameraTime += Time.deltaTime;
             if (!isMoving())
             {
                 moveCamera = false;
                 clickedObject.SetActive(false);
+                StartCoroutine(StopCamera());
             }
         }
+        if (cameraMoving) cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z), myAgent.speed * Time.deltaTime * 0.8F);
+
+
+        float speed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
+        Debug.Log("speed: " + speed);
+        myAnim.SetFloat("speed", speed);
     }
 
     private void FixedUpdate()
@@ -110,8 +117,18 @@ public class ClickerHandler : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2F);
 
-        moveCamera = true;
+        if (!moveCamera)
+        {
+            cameraTime = 0;
+            moveCamera = cameraMoving = true;
+        }
         hoomanAgent.GetComponent<HoomanMover>().StartMovement();
+    }
+
+    IEnumerator StopCamera()
+    {
+        yield return new WaitForSeconds(cameraTime * 0.1F);
+        cameraMoving = false;
     }
 
     public bool isMoving()
