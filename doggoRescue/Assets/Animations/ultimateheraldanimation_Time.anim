@@ -30,7 +30,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 3.9583333
+        time: 5.288889
         value: 3.9583333
         inSlope: 1
         outSlope: 0
@@ -46,7 +46,7 @@ AnimationClip:
     classID: 114
     script: {fileID: 11500000, guid: 6983ab2008f7a9f499b3f8cd6bec328d, type: 3}
   m_PPtrCurves: []
-  m_SampleRate: 60
+  m_SampleRate: 45
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -66,7 +66,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 3.9583333
+    m_StopTime: 5.288889
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 1.5
@@ -95,7 +95,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 3.9583333
+        time: 5.288889
         value: 3.9583333
         inSlope: 1
         outSlope: 0
