@@ -17,6 +17,7 @@ public class DoggoDig : Interactable
             resetting = true;
             Debug.Log(doggo.gameObject.name + " digging", gameObject);
             myAnim.SetTrigger("dig");
+            doggo.myAnim.SetTrigger("dig");
             StartCoroutine(SnowGrow());
         }
     }
