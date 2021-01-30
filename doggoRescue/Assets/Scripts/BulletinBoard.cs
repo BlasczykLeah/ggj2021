@@ -24,6 +24,42 @@ public class BulletinBoard : MonoBehaviour
             CloseMap();
         }
 
+        //TEMP
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ReturnMission();
+        }
+    }
+
+    public void AssignMission()
+    {
+        missionStarted = true;
+        MissionTracker.inst.currentMission = missionList[missionNumber];
+        CloseMap();
+    }
+
+    public void ReturnMission()
+    {
+        missionNumber++;
+        missionStarted = false;
+        MissionTracker.inst.currentMission = new Mission();
+    }
+
+    public void OpenMap()
+    {
+        UpdateMap();
+        map.SetActive(true);
+        mapOpen = true;
+    }
+
+    public void CloseMap()
+    {
+        map.SetActive(false);
+        mapOpen = false;
+    }
+
+    public void UpdateMap()
+    {
         switch (missionNumber)
         {
             case 0:
@@ -33,34 +69,30 @@ public class BulletinBoard : MonoBehaviour
                 mission4.interactable = false;
                 return;
             case 1:
-                mission1.enabled = false;
+                mission1.gameObject.SetActive(false);
+                mission2.interactable = true;
+                mission3.interactable = false;
+                mission4.interactable = false;
+                return;
+            case 2:
+                mission1.gameObject.SetActive(false);
+                mission2.gameObject.SetActive(false);
+                mission3.interactable = true;
+                mission4.interactable = false;
+                return;
+            case 3:
+                mission1.gameObject.SetActive(false);
+                mission2.gameObject.SetActive(false);
+                mission3.gameObject.SetActive(false);
+                mission4.interactable = true;
+                return;
+            default:
+                mission1.gameObject.SetActive(false);
+                mission2.gameObject.SetActive(false);
+                mission3.gameObject.SetActive(false);
+                mission4.gameObject.SetActive(false);
                 return;
         }
-    }
-
-    public void AssignMission()
-    {
-        missionStarted = true;
-        MissionTracker.inst.currentMission = missionList[missionNumber];
-        missionNumber++;
-    }
-
-    public void ReturnMission()
-    {
-        missionStarted = false;
-        MissionTracker.inst.currentMission = new Mission();
-    }
-
-    public void OpenMap()
-    {
-        map.SetActive(true);
-        mapOpen = true;
-    }
-
-    public void CloseMap()
-    {
-        map.SetActive(false);
-        mapOpen = false;
     }
 
     private void OnTriggerEnter(Collider collision)
