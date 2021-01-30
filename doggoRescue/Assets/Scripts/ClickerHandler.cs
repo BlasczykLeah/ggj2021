@@ -52,8 +52,10 @@ public class ClickerHandler : MonoBehaviour
 
 
         float speed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
-        Debug.Log("speed: " + speed);
         myAnim.SetFloat("speed", speed);
+
+        if (Input.GetKeyDown(KeyCode.Space) && !isMoving()) Dig();
+        else if (Input.GetKeyDown(KeyCode.Space) && isMoving()) Debug.Log("I can't dig I'm moving!");
     }
 
     private void FixedUpdate()
@@ -135,5 +137,22 @@ public class ClickerHandler : MonoBehaviour
     {
         //Debug.Log(myAgent.remainingDistance);
         return myAgent.remainingDistance > 0.1F;
+    }
+
+    void Dig()
+    {
+        //dig animation
+
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 1F, LayerMask.GetMask("Interactable"));
+        if (interactables.Length == 0)
+        {
+            Debug.Log("no interact");
+            return;
+        }
+        foreach(Collider c in interactables)
+        {
+            c.GetComponent<Interactable>().Interact(this);
+        }
+
     }
 }
