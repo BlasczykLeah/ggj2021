@@ -17,6 +17,7 @@ public class HoomanMover : MonoBehaviour
     GameObject borkUI;
 
     public bool interacting;
+    public HoomanRescue carrying = null;
 
     // Start is called before the first frame update
     void Start()
@@ -29,7 +30,8 @@ public class HoomanMover : MonoBehaviour
     {
         if (!commandMove)
         {
-            myAgent.speed = 2F;
+            if (!carrying) myAgent.speed = 2F;
+            else myAgent.speed = 1.5F;
 
             if (startMoving)
             {
@@ -69,6 +71,12 @@ public class HoomanMover : MonoBehaviour
 
     public void BorkCommand(Vector3 position, GameObject ui)
     {
+        if (carrying)
+        {
+            //maybe add a delay here later 
+            carrying.StopCarry();
+            carrying = null;
+        }
         if (!interacting)
         {
             commandMove = true;
@@ -93,7 +101,7 @@ public class HoomanMover : MonoBehaviour
 
     void FindInderactables()
     {
-        Collider[] interactables = Physics.OverlapSphere(transform.position, 3F, LayerMask.GetMask("Interactable"));
+        Collider[] interactables = Physics.OverlapSphere(transform.position, 1F, LayerMask.GetMask("Interactable"));
         if (interactables.Length == 0)
         {
             Debug.Log("I didn't find anyrthing");

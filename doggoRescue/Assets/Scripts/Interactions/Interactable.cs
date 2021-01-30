@@ -6,11 +6,11 @@ public class Interactable : MonoBehaviour
 {
     public virtual void Interact(HoomanMover hooman)
     {
-        Debug.Log(hooman.gameObject.name + " has interacted with " + name);
+        Debug.Log(hooman.gameObject.name + " has interacted with " + name, gameObject);
         ResetHooman(hooman, 1F);
     }
 
-   void ResetHooman(HoomanMover hooman, float time)
+   protected void ResetHooman(HoomanMover hooman, float time)
     {
         StartCoroutine(hooman.MoveBack(time));
     }

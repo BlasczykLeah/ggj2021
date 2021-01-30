@@ -76,7 +76,7 @@ public class ClickerHandler : MonoBehaviour
             ableToMove = false;
         }
 
-        if (ableToMove && Input.GetMouseButtonDown(0))
+        if (ableToMove && Input.GetMouseButton(0))
         {
             Vector3 pos = new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z);
             //Debug.Log(pos);
