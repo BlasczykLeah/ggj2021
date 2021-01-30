@@ -12,8 +12,12 @@ public class ClickerHandler : MonoBehaviour
     bool ableToMove;
     bool moveCamera;
 
-    public GameObject UIobject;
     NavMeshAgent myAgent;
+
+    [Header("UI")]
+    public GameObject UIobject;
+    public GameObject clickedObject;
+    public GameObject borkObject;
 
     [Header("Camera")]
     public float cameraSpeed;
@@ -38,7 +42,11 @@ public class ClickerHandler : MonoBehaviour
         if (moveCamera)
         {
             cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z), myAgent.speed * Time.deltaTime * 0.8F);
-            if (myAgent.isStopped) moveCamera = false;
+            if (!isMoving())
+            {
+                moveCamera = false;
+                clickedObject.SetActive(false);
+            }
         }
     }
 
@@ -68,13 +76,21 @@ public class ClickerHandler : MonoBehaviour
             ableToMove = false;
         }
 
-        // Check for valid drop
         if (ableToMove && Input.GetMouseButtonDown(0))
         {
             Vector3 pos = new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z);
             Debug.Log(pos);
-            //transform.position = pos;
+
+            clickedObject.transform.position = pos;
+            clickedObject.SetActive(true);
+
             StartCoroutine(MoveTowards(pos));
+        }
+        else if(ableToMove && Input.GetMouseButtonDown(1))
+        {
+            //bork
+            borkObject.SetActive(true);
+            hoomanAgent.GetComponent<HoomanMover>().BorkCommand(new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z), borkObject);
         }
     }
 
@@ -95,18 +111,9 @@ public class ClickerHandler : MonoBehaviour
         moveCamera = true;
     }
 
-    IEnumerator MoveHooman(Vector3 position)
-    {
-        yield return new WaitUntil(() => Mathf.Abs(Vector3.Distance(hoomanAgent.transform.position, transform.position)) > 2F);
-
-        Debug.Log("time to move!, " + myAgent.remainingDistance);
-
-        hoomanAgent.SetDestination(position);
-    }
-
     public bool isMoving()
     {
         //Debug.Log(myAgent.remainingDistance);
-        return myAgent.remainingDistance > 0.2F;
+        return myAgent.remainingDistance > 0.1F;
     }
 }
