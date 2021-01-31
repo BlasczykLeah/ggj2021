@@ -8,9 +8,4 @@ public class ShowSmell : MonoBehaviour
     {
         foreach (Animator a in GetComponentsInChildren<Animator>()) a.SetTrigger("fade");
     }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L)) Smell();
-    }
 }

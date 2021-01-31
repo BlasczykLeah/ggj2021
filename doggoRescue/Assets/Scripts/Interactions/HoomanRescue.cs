@@ -15,6 +15,7 @@ public class HoomanRescue : Interactable
             // set hooman animation and maybe location
             Debug.Log("helping fello hooman!");
             hooman.carrying = this;
+            hooman.myAnim.SetTrigger("pickup");
 
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;

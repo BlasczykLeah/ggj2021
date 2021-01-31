@@ -75,7 +75,7 @@ public class HoomanMover : MonoBehaviour
         }
 
         myAnim.SetFloat("speed", Mathf.Abs(myAgent.remainingDistance));
-        myAnim.SetBool("carry", carrying);
+        //myAnim.SetBool("carry", carrying);
     }
 
     public void StartMovement()
@@ -90,6 +90,7 @@ public class HoomanMover : MonoBehaviour
             //maybe add a delay here later 
             carrying.StopCarry();
             carrying = null;
+            myAnim.SetTrigger("drop");
         }
         if (!interacting)
         {

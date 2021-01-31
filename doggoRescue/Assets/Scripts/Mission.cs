@@ -7,7 +7,7 @@ public struct Mission
 {
     //This script is in charge of holding each of the mission components
 
-    public GameObject person, physicalHints;
+    public GameObject person, physicalHints, scentTrail;
     public Vector3 personLocation;
     public string personDirection, missionDescription;
 }
