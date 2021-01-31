@@ -84,4 +84,10 @@ public class AudioManager : MonoBehaviour
         audioSource.clip = audioClips[8];
         audioSource.Play();
     }
+
+    public void PersonSaved()
+    {
+        audioSource.clip = audioClips[9];
+        audioSource.Play();
+    }
 }

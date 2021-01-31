@@ -45,6 +45,7 @@ public class BulletinBoard : MonoBehaviour
     {
         missionNumber++;
         missionStarted = false;
+        AudioManager.inst.PersonSaved();
         MissionTracker.inst.currentMission.person.GetComponent<HoomanRescue>().EndCarry();
         MissionTracker.inst.currentMission.person.SetActive(false);
         MissionTracker.inst.currentMission.physicalHints.SetActive(false);
