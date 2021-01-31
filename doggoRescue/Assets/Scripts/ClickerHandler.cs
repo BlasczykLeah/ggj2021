@@ -6,6 +6,8 @@ using UnityEngine.EventSystems;
 
 public class ClickerHandler : MonoBehaviour
 {
+    public static ClickerHandler inst;
+
     public Animator myAnim;
     public bool canMove;
     bool ableToMove;
@@ -29,6 +31,7 @@ public class ClickerHandler : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        inst = this;
         myAgent = GetComponent<NavMeshAgent>();
         cameraOffset = new Vector3(cameraTransform.position.x - transform.position.x, cameraTransform.position.y - transform.position.y, cameraTransform.position.z - transform.position.z);
     }
@@ -131,7 +134,12 @@ public class ClickerHandler : MonoBehaviour
     IEnumerator StopCamera()
     {
         yield return new WaitForSeconds(cameraTime * 0.1F);
-        cameraMoving = false;
+        if (!isMoving())
+        {
+            cameraMoving = false;
+            Debug.Log("stopping camera");
+        }
+        else Debug.Log("Dog is still moving, going to keep the camera going");
     }
 
     public bool isMoving()
