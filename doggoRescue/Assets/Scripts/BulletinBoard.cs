@@ -35,6 +35,7 @@ public class BulletinBoard : MonoBehaviour
     public void AssignMission()
     {
         missionStarted = true;
+        Menus.inst.sign.sprite = missionList[missionNumber].sign;
         MissionTracker.inst.currentMission = missionList[missionNumber];
         MissionTracker.inst.currentMission.person.SetActive(true);
         MissionTracker.inst.currentMission.physicalHints.SetActive(true);

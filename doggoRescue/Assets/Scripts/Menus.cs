@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Menus : MonoBehaviour
 {
+    public static Menus inst;
+
     public GameObject pauseMenu;
     public bool paused;
+    public Image sign;
 
     public void Start()
     {
+       inst = this;
        pauseMenu.SetActive(false);
     }
 
@@ -19,7 +24,7 @@ public class Menus : MonoBehaviour
         {
             pause();
         }
-        if (Input.GetKeyDown(KeyCode.Escape) && paused == true)
+        else if (Input.GetKeyDown(KeyCode.Escape) && paused == true)
         {
             resume();
         }
