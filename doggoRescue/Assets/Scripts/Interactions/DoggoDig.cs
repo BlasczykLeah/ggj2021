@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DoggoDig : Interactable
+public class DoggoDig : MonoBehaviour
 {
     public Animator myAnim;
 
@@ -11,16 +11,22 @@ public class DoggoDig : Interactable
 
     bool resetting = false;
 
-    public override void Interact(ClickerHandler doggo)
+    public bool Interact(ClickerHandler doggo)
     {
         if (!resetting)
         {
             resetting = true;
             Debug.Log(doggo.gameObject.name + " digging", gameObject);
+
+            if (doggo.isMoving())
+                StartCoroutine(doggo.MoveTowards(new Vector3(transform.position.x, transform.position.y, transform.position.z)));
+
             myAnim.SetTrigger("dig");
             doggo.myAnim.SetTrigger("dig");
             StartCoroutine(SnowGrow());
+            return true;
         }
+        return false;
     }
 
     IEnumerator SnowGrow()

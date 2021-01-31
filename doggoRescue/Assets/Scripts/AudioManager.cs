@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public List<AudioClip> audioClips;
 
     public AudioSource audioSource;
+    public AudioSource walkSource;
 
     private void Awake()
     {
@@ -52,12 +53,12 @@ public class AudioManager : MonoBehaviour
     
     public void PlayWalk(bool play)
     {
-        audioSource.clip = audioClips[4];
+        walkSource.clip = audioClips[4];
 
         if (play)
-            audioSource.Play();
+            walkSource.Play();
         else
-            audioSource.Stop();
+            walkSource.Stop();
     }
 
     public void PlayDig()

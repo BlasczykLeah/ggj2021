@@ -53,6 +53,7 @@ public class ClickerHandler : MonoBehaviour
             cameraTime += Time.deltaTime;
             if (!isMoving())
             {
+                AudioManager.inst.PlayWalk(false);
                 moveCamera = false;
                 clickedObject.SetActive(false);
                 StartCoroutine(StopCamera());
@@ -65,8 +66,9 @@ public class ClickerHandler : MonoBehaviour
         float speed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
         myAnim.SetFloat("speed", speed);
 
-        if (Input.GetKeyDown(KeyCode.Space) && !isMoving()) Dig();
-        else if (Input.GetKeyDown(KeyCode.Space) && isMoving()) Debug.Log("I can't dig I'm moving!");
+        if (Input.GetKeyDown(KeyCode.Space)) Dig();
+        //if (Input.GetKeyDown(KeyCode.Space) && !isMoving()) Dig();
+        //else if (Input.GetKeyDown(KeyCode.Space) && isMoving()) Debug.Log("I can't dig I'm moving!");
 
         if (!canSniff)
         {
@@ -79,13 +81,6 @@ public class ClickerHandler : MonoBehaviour
         }
 
         if (Input.GetKeyDown(KeyCode.B)) ReturnToTown();
-    }
-
-    private void FixedUpdate()
-    {
-       // if (!myAgent.isStopped)
-            //cameraTransform.position = new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z);\
-          //  cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z), myAgent.speed * Time.deltaTime * 0.8F);
     }
 
     void CheckMovement()
@@ -121,6 +116,7 @@ public class ClickerHandler : MonoBehaviour
         {
             //bork
             Debug.LogWarning("BORK");
+            AudioManager.inst.PlayBark();
             Vector3 pos = new Vector3(UIobject.transform.position.x, UIobject.transform.position.y, UIobject.transform.position.z);
 
             borkObject.SetActive(true);
@@ -130,9 +126,10 @@ public class ClickerHandler : MonoBehaviour
         }
     }
 
-    IEnumerator MoveTowards(Vector3 position)
+    public IEnumerator MoveTowards(Vector3 position)
     {
         yield return new WaitForFixedUpdate();
+        if (!isMoving()) AudioManager.inst.PlayWalk(true);
 
         myAgent.SetDestination(position);
         StartCoroutine(MoveCamera());
@@ -171,21 +168,39 @@ public class ClickerHandler : MonoBehaviour
     {
         //dig animation
 
+       // if(isMoving())   StartCoroutine(MoveTowards(new Vector3(transform.position.x, transform.position.y, transform.position.z)));
+
         Collider[] interactables = Physics.OverlapSphere(transform.position, 1F, LayerMask.GetMask("Interactable"));
         if (interactables.Length == 0)
         {
             //Debug.Log("no interact");
-           if (FindObjectOfType<BulletinBoard>().missionStarted && canSniff)
+           if (canSniff)
             {
                 // sniff
+                GetComponent<MissionTracker>().SmellTrail();
                 canSniff = false;
             }
         }
         else
         {
+            bool dig = false;
             foreach (Collider c in interactables)
             {
-                c.GetComponent<Interactable>().Interact(this);
+                if (c.GetComponent<DoggoDig>())
+                {
+                    if (c.GetComponent<DoggoDig>().Interact(this) && !dig)
+                    {
+                        AudioManager.inst.PlayDig();
+                        dig = true;
+                    }
+                }
+            }
+
+            if (!dig && canSniff)
+            {
+                //sniff
+                GetComponent<MissionTracker>().SmellTrail();
+                canSniff = false;
             }
         }
     }

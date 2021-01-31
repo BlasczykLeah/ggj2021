@@ -14,4 +14,13 @@ public class MissionTracker : MonoBehaviour
     {
         inst = this;
     }
+
+    public void SmellTrail()
+    {
+        Debug.Log("sniff sniff");
+        AudioManager.inst.PlaySniff();
+
+        if (currentMission.scentTrail)
+            currentMission.scentTrail.GetComponent<ShowSmell>().Smell();
+    }
 }
