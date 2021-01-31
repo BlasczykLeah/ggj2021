@@ -13,6 +13,9 @@ public class ClickerHandler : MonoBehaviour
     bool ableToMove;
     bool moveCamera, cameraMoving;
 
+    public bool canSniff = true;
+    public float sniffCooldown = 30F;
+
     NavMeshAgent myAgent;
 
     [Header("UI")]
@@ -28,12 +31,16 @@ public class ClickerHandler : MonoBehaviour
     [Header("Hooman")]
     public NavMeshAgent hoomanAgent;
 
+    [Header("Reset")]
+    Vector3 startingPos;
+
     // Start is called before the first frame update
     void Start()
     {
         inst = this;
         myAgent = GetComponent<NavMeshAgent>();
         cameraOffset = new Vector3(cameraTransform.position.x - transform.position.x, cameraTransform.position.y - transform.position.y, cameraTransform.position.z - transform.position.z);
+        startingPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     // Update is called once per frame
@@ -60,6 +67,18 @@ public class ClickerHandler : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space) && !isMoving()) Dig();
         else if (Input.GetKeyDown(KeyCode.Space) && isMoving()) Debug.Log("I can't dig I'm moving!");
+
+        if (!canSniff)
+        {
+            sniffCooldown -= Time.deltaTime;
+            if(sniffCooldown < 0)
+            {
+                canSniff = true;
+                sniffCooldown = 30F;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.B)) ReturnToTown();
     }
 
     private void FixedUpdate()
@@ -155,13 +174,39 @@ public class ClickerHandler : MonoBehaviour
         Collider[] interactables = Physics.OverlapSphere(transform.position, 1F, LayerMask.GetMask("Interactable"));
         if (interactables.Length == 0)
         {
-            Debug.Log("no interact");
-            return;
+            //Debug.Log("no interact");
+           if (FindObjectOfType<BulletinBoard>().missionStarted && canSniff)
+            {
+                // sniff
+                canSniff = false;
+            }
         }
-        foreach(Collider c in interactables)
+        else
         {
-            c.GetComponent<Interactable>().Interact(this);
+            foreach (Collider c in interactables)
+            {
+                c.GetComponent<Interactable>().Interact(this);
+            }
         }
+    }
 
+    public void ReturnToTown()
+    {
+        myAgent.SetDestination(startingPos);
+        
+        Vector3 hoomanPos = new Vector3(startingPos.x, startingPos.y, startingPos.z + 4F);
+        hoomanAgent.GetComponent<HoomanMover>().BorkCommand(hoomanPos, borkObject);
+
+        StartCoroutine(TeleportObjects(hoomanPos));
+    }
+
+    IEnumerator TeleportObjects(Vector3 hoomanPos)
+    {
+        yield return new WaitForEndOfFrame();
+
+        transform.position = startingPos;
+        cameraTransform.position = startingPos + cameraOffset;
+        cameraMoving = moveCamera = false;
+        hoomanAgent.transform.position = hoomanPos;
     }
 }
