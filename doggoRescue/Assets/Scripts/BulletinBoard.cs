@@ -15,6 +15,8 @@ public class BulletinBoard : MonoBehaviour
     public int missionNumber = 0;
     public bool missionStarted = false, mapOpen = false, inRange = false;
 
+    public Image personSavedIcon;
+
     private void Start()
     {
         inst = this;
@@ -44,6 +46,7 @@ public class BulletinBoard : MonoBehaviour
 
     public void ReturnMission()
     {
+        StartCoroutine("SavedPerson");
         missionNumber++;
         missionStarted = false;
         AudioManager.inst.PersonSaved();
@@ -121,5 +124,13 @@ public class BulletinBoard : MonoBehaviour
         {
             inRange = false;
         }
+    }
+
+    IEnumerator SavedPerson()
+    {
+        personSavedIcon.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        personSavedIcon.gameObject.SetActive(false);
     }
 }
