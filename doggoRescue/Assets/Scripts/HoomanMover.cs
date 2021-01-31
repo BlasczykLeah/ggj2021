@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class HoomanMover : MonoBehaviour
 {
+    public Animator myAnim;
+
     public ClickerHandler doggo;
     NavMeshAgent myAgent;
 
@@ -62,11 +64,15 @@ public class HoomanMover : MonoBehaviour
                 FindInderactables();
             }
         }
+
+        myAnim.SetFloat("speed", Mathf.Abs(myAgent.remainingDistance));
+        myAnim.SetBool("carry", carrying);
     }
 
     public void StartMovement()
     {
         startMoving = true;
+        myAnim.SetTrigger("walk");
     }
 
     public void BorkCommand(Vector3 position, GameObject ui)
