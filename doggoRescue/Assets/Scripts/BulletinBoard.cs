@@ -32,6 +32,11 @@ public class BulletinBoard : MonoBehaviour
         {
             CloseMap();
         }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            ReturnMission();
+        }
     }
 
     public void AssignMission()
