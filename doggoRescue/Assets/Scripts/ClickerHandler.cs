@@ -33,6 +33,7 @@ public class ClickerHandler : MonoBehaviour
 
     [Header("Reset")]
     Vector3 startingPos;
+    public Animator fader;
 
     // Start is called before the first frame update
     void Start()
@@ -207,6 +208,9 @@ public class ClickerHandler : MonoBehaviour
 
     public void ReturnToTown()
     {
+        if (fader) fader.SetTrigger("fade");
+        if (Menus.inst) Menus.inst.resume();
+
         myAgent.SetDestination(startingPos);
         
         Vector3 hoomanPos = new Vector3(startingPos.x, startingPos.y, startingPos.z + 4F);
@@ -217,11 +221,12 @@ public class ClickerHandler : MonoBehaviour
 
     IEnumerator TeleportObjects(Vector3 hoomanPos)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(1F);
 
         transform.position = startingPos;
         cameraTransform.position = startingPos + cameraOffset;
         cameraMoving = moveCamera = false;
         hoomanAgent.transform.position = hoomanPos;
+        AudioManager.inst.PlayWalk(false);
     }
 }
