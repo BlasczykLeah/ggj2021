@@ -54,6 +54,7 @@ public class BulletinBoard : MonoBehaviour
     public void OpenMap()
     {
         UpdateMap();
+        AudioManager.inst.OpenMap();
         map.SetActive(true);
         mapOpen = true;
         ClickerHandler.inst.canMove = false;
@@ -61,6 +62,7 @@ public class BulletinBoard : MonoBehaviour
 
     public void CloseMap()
     {
+        AudioManager.inst.CloseMap();
         map.SetActive(false);
         mapOpen = false;
         ClickerHandler.inst.canMove = true;
