@@ -56,4 +56,9 @@ public class Menus : MonoBehaviour
         ClickerHandler.inst.canMove = false;
         paused = true;
     }
+
+    public void returnToTown()
+    {
+        ClickerHandler.inst.ReturnToTown();
+    }
 }
