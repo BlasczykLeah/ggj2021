@@ -46,12 +46,14 @@ public class Menus : MonoBehaviour
     public void resume()
     {
         pauseMenu.SetActive(false);
+        ClickerHandler.inst.canMove = true;
         paused = false;
     }
 
     public void pause()
     {
         pauseMenu.SetActive(true);
+        ClickerHandler.inst.canMove = false;
         paused = true;
     }
 }
