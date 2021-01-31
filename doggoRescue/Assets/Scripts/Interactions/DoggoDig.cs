@@ -7,6 +7,7 @@ public class DoggoDig : Interactable
     public Animator myAnim;
 
     public float resetTime;
+    public float riseTime;
 
     bool resetting = false;
 
@@ -27,7 +28,7 @@ public class DoggoDig : Interactable
         yield return new WaitForSeconds(resetTime);
         myAnim.SetTrigger("reset");
 
-        yield return new WaitForSeconds(2F);
+        yield return new WaitForSeconds(riseTime);
         resetting = false;
     }
 }

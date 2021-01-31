@@ -33,6 +33,7 @@ GameObject:
   - component: {fileID: 366079447}
   - component: {fileID: 366079448}
   - component: {fileID: 366079452}
+  - component: {fileID: 4584744252976111889}
   m_Layer: 0
   m_Name: dog
   m_TagString: Untagged
@@ -140,6 +141,14 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!81 &4584744252976111889
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8555880004016746134}
+  m_Enabled: 1
 --- !u!1001 &7248544468331646606
 PrefabInstance:
   m_ObjectHideFlags: 0
