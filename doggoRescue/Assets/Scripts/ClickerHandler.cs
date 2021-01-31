@@ -131,7 +131,12 @@ public class ClickerHandler : MonoBehaviour
     IEnumerator StopCamera()
     {
         yield return new WaitForSeconds(cameraTime * 0.1F);
-        cameraMoving = false;
+        if (!isMoving())
+        {
+            cameraMoving = false;
+            Debug.Log("stopping camera");
+        }
+        else Debug.Log("Dog is still moving, going to keep the camera going");
     }
 
     public bool isMoving()

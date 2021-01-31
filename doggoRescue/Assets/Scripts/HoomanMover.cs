@@ -32,8 +32,16 @@ public class HoomanMover : MonoBehaviour
     {
         if (!commandMove)
         {
-            if (!carrying) myAgent.speed = 2F;
-            else myAgent.speed = 1.5F;
+            if (!carrying)
+            {
+                myAgent.speed = 2F;
+                myAnim.speed = 1.2F;
+            }
+            else
+            {
+                myAgent.speed = 1.5F;
+                myAnim.speed = 0.95F;
+            }
 
             if (startMoving)
             {
@@ -52,6 +60,7 @@ public class HoomanMover : MonoBehaviour
         else
         {
             myAgent.speed = 5F;
+            myAnim.speed = 1.5F;
 
             // stopped moving
             if (myAgent.remainingDistance < 0.1F && movingToCommand)
@@ -72,7 +81,6 @@ public class HoomanMover : MonoBehaviour
     public void StartMovement()
     {
         startMoving = true;
-        myAnim.SetTrigger("walk");
     }
 
     public void BorkCommand(Vector3 position, GameObject ui)
