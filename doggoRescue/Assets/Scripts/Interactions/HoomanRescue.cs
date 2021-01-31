@@ -42,6 +42,7 @@ public class HoomanRescue : Interactable
 
     public void EndCarry()
     {
+        transform.parent.GetComponent<HoomanMover>().myAnim.SetTrigger("drop");
         transform.parent.GetComponent<HoomanMover>().carrying = null;
         StopCarry();
     }
