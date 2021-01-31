@@ -77,7 +77,7 @@ public class ClickerHandler : MonoBehaviour
             if(sniffCooldown < 0)
             {
                 canSniff = true;
-                sniffCooldown = 30F;
+                sniffCooldown = 10F;
             }
         }
 
