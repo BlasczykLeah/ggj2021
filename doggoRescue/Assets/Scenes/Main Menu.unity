@@ -1558,7 +1558,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: How to Save a Life
+  m_text: Doggo Rescue
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 112f713aec6b7124d89e734e3fa25174, type: 2}
   m_sharedMaterial: {fileID: -2702301316731909467, guid: 112f713aec6b7124d89e734e3fa25174, type: 2}
