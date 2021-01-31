@@ -54,12 +54,14 @@ public class BulletinBoard : MonoBehaviour
         UpdateMap();
         map.SetActive(true);
         mapOpen = true;
+        ClickerHandler.inst.canMove = false;
     }
 
     public void CloseMap()
     {
         map.SetActive(false);
         mapOpen = false;
+        ClickerHandler.inst.canMove = true;
     }
 
     public void UpdateMap()
