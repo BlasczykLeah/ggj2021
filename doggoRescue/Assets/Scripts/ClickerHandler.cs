@@ -187,6 +187,8 @@ public class ClickerHandler : MonoBehaviour
             bool dig = false;
             foreach (Collider c in interactables)
             {
+                if (c.GetComponent<BulletinBoard>()) return;
+
                 if (c.GetComponent<DoggoDig>())
                 {
                     if (c.GetComponent<DoggoDig>().Interact(this) && !dig)
