@@ -8,7 +8,7 @@ public class Menus : MonoBehaviour
 {
     public static Menus inst;
 
-    public GameObject pauseMenu;
+    public GameObject pauseMenu, howToPlayPage;
     public bool paused;
     public Image sign;
 
@@ -60,5 +60,15 @@ public class Menus : MonoBehaviour
     public void returnToTown()
     {
         ClickerHandler.inst.ReturnToTown();
+    }
+
+    public void OpenHowToPlay()
+    {
+        howToPlayPage.gameObject.SetActive(true);
+    }
+
+    public void CloseHowToPlay()
+    {
+        howToPlayPage.gameObject.SetActive(false);
     }
 }
