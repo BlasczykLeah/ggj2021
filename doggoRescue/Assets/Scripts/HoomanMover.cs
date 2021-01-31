@@ -21,6 +21,8 @@ public class HoomanMover : MonoBehaviour
     public bool interacting;
     public HoomanRescue carrying = null;
 
+    public Transform armTransform;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -126,7 +128,7 @@ public class HoomanMover : MonoBehaviour
 
         Debug.Log("interacting...");
         interacting = true;
-        interactables[0].GetComponent<Interactable>().Interact(this);
+        interactables[0].GetComponent<Interactable>().Interact(this, armTransform);
 
         //StartCoroutine(MoveBack(2F));
     }

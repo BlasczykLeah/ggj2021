@@ -8,22 +8,19 @@ public class HoomanRescue : Interactable
 
     public Vector3 snapPoint = new Vector3(-0.03F, 0.16F, 0.62F);
 
-    public override void Interact(HoomanMover hooman)
+    HoomanMover rescuer;
+
+    public override void Interact(HoomanMover hooman, Transform location)
     {
         if (!carrying)
         {
             // set hooman animation and maybe location
             Debug.Log("helping fello hooman!");
+            rescuer = hooman;
             hooman.carrying = this;
             hooman.myAnim.SetTrigger("pickup");
 
-            GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Rigidbody>().isKinematic = true;
-            transform.rotation = Quaternion.identity;
-            transform.rotation = hooman.transform.rotation;
-            transform.SetParent(hooman.transform);
-            transform.localPosition = snapPoint;
-            //GetComponent<Rigidbody>().velocity = Vector3.zero;
+            StartCoroutine(DelayPickup(location));
             
             carrying = true;
 
@@ -42,8 +39,20 @@ public class HoomanRescue : Interactable
 
     public void EndCarry()
     {
-        transform.parent.GetComponent<HoomanMover>().myAnim.SetTrigger("drop");
-        transform.parent.GetComponent<HoomanMover>().carrying = null;
+        rescuer.myAnim.SetTrigger("drop");
+        rescuer.carrying = null;
         StopCarry();
+    }
+
+    IEnumerator DelayPickup(Transform transforme)
+    {
+        yield return new WaitForSeconds(1.5F);
+
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().isKinematic = true;
+        transform.rotation = Quaternion.Euler(-90, 0, rescuer.transform.rotation.eulerAngles.y + 90);
+        //transform.rotation = hooman.transform.rotation;
+        transform.SetParent(transforme);
+        transform.localPosition = snapPoint;
     }
 }

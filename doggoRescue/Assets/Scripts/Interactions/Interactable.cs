@@ -10,6 +10,12 @@ public class Interactable : MonoBehaviour
         ResetHooman(hooman, 1F);
     }
 
+    public virtual void Interact(HoomanMover hooman, Transform location)
+    {
+        Debug.Log(hooman.gameObject.name + " has interacted with " + name, gameObject);
+        ResetHooman(hooman, 1F);
+    }
+
     public virtual void Interact(ClickerHandler doggo)
     {
         Debug.Log(doggo.gameObject.name + " has interacted with " + name, gameObject);

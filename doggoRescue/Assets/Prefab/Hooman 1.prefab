@@ -107,6 +107,7 @@ MonoBehaviour:
   stoppingDistance: 4
   interacting: 0
   carrying: {fileID: 0}
+  armTransform: {fileID: 4805474532738767514}
 --- !u!54 &1969131351355768760
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -424,5 +425,10 @@ GameObject:
 --- !u!4 &2078829019241440427 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: a3ccea3376b0d7f4089a648d16051a21, type: 3}
+  m_PrefabInstance: {fileID: 1969131351027581760}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &4805474532738767514 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -2746145569926735398, guid: a3ccea3376b0d7f4089a648d16051a21, type: 3}
   m_PrefabInstance: {fileID: 1969131351027581760}
   m_PrefabAsset: {fileID: 0}
