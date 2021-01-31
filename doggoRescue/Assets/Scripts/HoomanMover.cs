@@ -127,9 +127,19 @@ public class HoomanMover : MonoBehaviour
         }
 
         Debug.Log("interacting...");
-        interacting = true;
-        interactables[0].GetComponent<Interactable>().Interact(this, armTransform);
+        foreach (Collider c in interactables)
+        {
+            if (c.GetComponent<Interactable>())
+            {
+                interacting = true;
+                interactables[0].GetComponent<Interactable>().Interact(this, armTransform);
+                return;
+            }
+        }
 
-        //StartCoroutine(MoveBack(2F));
+
+        Debug.Log("I didn't find anyrthing");
+        StartCoroutine(MoveBack(0.5F));
+        return;
     }
 }
