@@ -7,11 +7,18 @@ public class BulletinBoard : MonoBehaviour
 {
     //This script will be holding and assigning missions to doggo
 
+    public static BulletinBoard inst;
+
     public List<Mission> missionList = new List<Mission>();
     public GameObject map;
     public Button mission1, mission2, mission3, mission4;
     public int missionNumber = 0;
     public bool missionStarted = false, mapOpen = false, inRange = false;
+
+    private void Start()
+    {
+        inst = this;
+    }
 
     void Update()
     {
@@ -22,12 +29,6 @@ public class BulletinBoard : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Space) && mapOpen)
         {
             CloseMap();
-        }
-
-        //TEMP
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            ReturnMission();
         }
     }
 
@@ -44,6 +45,7 @@ public class BulletinBoard : MonoBehaviour
     {
         missionNumber++;
         missionStarted = false;
+        MissionTracker.inst.currentMission.person.GetComponent<HoomanRescue>().EndCarry();
         MissionTracker.inst.currentMission.person.SetActive(false);
         MissionTracker.inst.currentMission.physicalHints.SetActive(false);
         MissionTracker.inst.currentMission = new Mission();

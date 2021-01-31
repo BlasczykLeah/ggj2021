@@ -34,12 +34,12 @@ public class HoomanMover : MonoBehaviour
         {
             if (!carrying)
             {
-                myAgent.speed = 2F;
+                myAgent.speed = 3F;
                 myAnim.speed = 1.2F;
             }
             else
             {
-                myAgent.speed = 1.5F;
+                myAgent.speed = 2F;
                 myAnim.speed = 0.95F;
             }
 

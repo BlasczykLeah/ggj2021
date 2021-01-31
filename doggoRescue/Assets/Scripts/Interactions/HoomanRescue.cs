@@ -18,6 +18,7 @@ public class HoomanRescue : Interactable
 
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().isKinematic = true;
+            transform.rotation = Quaternion.identity;
             transform.rotation = hooman.transform.rotation;
             transform.SetParent(hooman.transform);
             transform.localPosition = snapPoint;
@@ -36,5 +37,11 @@ public class HoomanRescue : Interactable
         GetComponent<Rigidbody>().isKinematic = false;
         GetComponent<Rigidbody>().useGravity = true;
         carrying = false;
+    }
+
+    public void EndCarry()
+    {
+        transform.parent.GetComponent<HoomanMover>().carrying = null;
+        StopCarry();
     }
 }
