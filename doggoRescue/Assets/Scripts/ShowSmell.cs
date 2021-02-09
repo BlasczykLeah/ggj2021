@@ -9,5 +9,6 @@ public class ShowSmell : MonoBehaviour
     public void Smell()
     {
         foreach (Animator a in scents) a.SetTrigger("fade");
+        SpellSpin.spinner.ShowArrow();
     }
 }

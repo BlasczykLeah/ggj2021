@@ -35,6 +35,8 @@ public class ClickerHandler : MonoBehaviour
     Vector3 startingPos;
     public Animator fader;
 
+    float speed = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -64,8 +66,11 @@ public class ClickerHandler : MonoBehaviour
         else if (cameraMoving) cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, new Vector3(transform.position.x + cameraOffset.x, transform.position.y + cameraOffset.y, transform.position.z + cameraOffset.z), myAgent.speed * Time.deltaTime * 0.8F);
 
 
-        float speed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
+        float currSpeed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
         myAnim.SetFloat("speed", speed);
+        if (currSpeed < 0.5F && currSpeed < speed) myAgent.SetDestination(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+
+        speed = currSpeed;
 
         if (Input.GetKeyDown(KeyCode.Space)) Dig();
         //if (Input.GetKeyDown(KeyCode.Space) && !isMoving()) Dig();

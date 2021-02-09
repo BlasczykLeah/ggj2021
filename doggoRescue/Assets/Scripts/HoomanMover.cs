@@ -23,6 +23,8 @@ public class HoomanMover : MonoBehaviour
 
     public Transform armTransform;
 
+    float speed = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,16 +36,8 @@ public class HoomanMover : MonoBehaviour
     {
         if (!commandMove)
         {
-            if (!carrying)
-            {
-                myAgent.speed = 3F;
-                myAnim.speed = 1.2F;
-            }
-            else
-            {
-                myAgent.speed = 2F;
-                myAnim.speed = 0.95F;
-            }
+            myAgent.speed = 3F;
+            myAnim.speed = 1.2F;
 
             if (startMoving)
             {
@@ -74,10 +68,23 @@ public class HoomanMover : MonoBehaviour
 
                 FindInderactables();
             }
+            else if ((Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z)) < 1.8F && myAgent.remainingDistance < 0.5F && movingToCommand)
+            {
+                myAgent.SetDestination(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+
+                //check for interaction
+                movingToCommand = false;
+                borkUI.SetActive(false);
+                Debug.Log("can I do anything here?");
+
+                FindInderactables();
+            }
         }
 
-        myAnim.SetFloat("speed", Mathf.Abs(myAgent.remainingDistance));
-        //myAnim.SetBool("carry", carrying);
+        float currSpeed = Mathf.Abs(myAgent.velocity.x) + Mathf.Abs(myAgent.velocity.z);
+        myAnim.SetFloat("speed", currSpeed);
+        if (currSpeed < 0.5F && currSpeed < speed) myAgent.SetDestination(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+        speed = currSpeed;
     }
 
     public void StartMovement()

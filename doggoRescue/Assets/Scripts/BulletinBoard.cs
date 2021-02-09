@@ -15,6 +15,8 @@ public class BulletinBoard : MonoBehaviour
     public int missionNumber = 0;
     public bool missionStarted = false, mapOpen = false, inRange = false;
 
+    public SpellSpin sniffSpinner;
+
     public Image personSavedIcon;
 
     private void Start()
@@ -41,6 +43,7 @@ public class BulletinBoard : MonoBehaviour
         MissionTracker.inst.currentMission = missionList[missionNumber];
         MissionTracker.inst.currentMission.person.SetActive(true);
         MissionTracker.inst.currentMission.physicalHints.SetActive(true);
+        sniffSpinner.personLocation = missionList[missionNumber].person.transform;
         CloseMap();
     }
 
